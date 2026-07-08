@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+::selection {
+  background-color: #164a09;
+  color: #f7fafc;
+}
+
+/* Signature route-line stroke animation used in the hero + journey graphics */
+.route-path {
+  stroke-dasharray: 6 6;
+  animation: dash 2.4s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.eyebrow {
+  letter-spacing: 0.14em;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Custom scrollbar for the horizontal journey timeline on small screens */
+.timeline-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.timeline-scroll::-webkit-scrollbar-thumb {
+  background-color: #a7d8f6;
+  border-radius: 999px;
+}
+
+/* Authority / exam marquee */
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
