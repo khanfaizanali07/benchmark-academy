@@ -16,8 +16,8 @@ const COLUMNS = [
     links: [
       { label: "DataFlow verification", href: "#dataflow" },
       { label: "Exam registration", href: "#dataflow" },
-      { label: "Finishing School", href: "#fees" },
-      { label: "Course fees", href: "#fees" },
+      // { label: "Finishing School", href: "#fees" },
+      // { label: "Course fees", href: "#fees" },
     ],
   },
   {
