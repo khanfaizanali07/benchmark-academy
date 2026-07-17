@@ -1,9 +1,12 @@
-"use client";
-
-import { useState } from "react";
+'use client'
+import { useEffect, useState } from "react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Input, Select, Option, Textarea, Button } from "@material-tailwind/react";
 import { Phone, Mail, MapPin, Send, CheckCircle2 } from "lucide-react";
 
+export default function ContactPopup() {
+  const [open, setOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 const PROGRAM_OPTIONS = [
   "DHA / HAAD / MOH (UAE)",
   "Prometric — Saudi / Qatar / Oman / Bahrain / Kuwait",
@@ -15,64 +18,68 @@ const PROGRAM_OPTIONS = [
   "DataFlow verification only",
   "Not sure yet",
 ];
-
-export default function CTAContact() {
-  const [submitted, setSubmitted] = useState(false);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
   };
 
-  return (
-    <section id="contact" className="mx-auto max-w-7xl px-4 py-24 lg:px-8">
-      <div className="grid gap-12 rounded-3xl border border-navy-100 bg-white p-8 shadow-card lg:grid-cols-2 lg:p-12">
-        <div>
-          <span className="eyebrow text-xs font-bold uppercase text-forest-600">
-            Get Started
-          </span>
-          <h2 className="text-balance mt-3 font-display text-3xl font-semibold leading-tight text-ink sm:text-4xl">
-            Talk to a mentor about your route abroad
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-ink/65">
-            Share a few details and our team will get back to you with the
-            right exam track, timeline and next steps for your profile.
-          </p>
+  useEffect(() => {
 
-          <div className="mt-10">
-            <div className="flex items-start gap-3.5">
-              <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
-                <Phone className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-ink">Call or WhatsApp</p>
-                <p className="text-sm text-ink/65">+91 98XXX XXXXX</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3.5">
-              <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
-                <Mail className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-ink">Email</p>
-                <p className="text-sm text-ink/65">benchmarkglobal.academy@gmail.com</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3.5">
-              <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
-                <MapPin className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-ink">Office</p>
-                <p className="text-sm text-ink/65">
-                  office address here
-                </p>
-              </div>
-            </div>
-          </div>
+    
+      const timer = setTimeout(() => {
+        setOpen(true);
+      }, 500);
+
+      return () => clearTimeout(timer);
+    
+  }, []);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-5">
+
+      {/* Overlay */}
+      <div
+        onClick={handleClose}
+        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+      />
+
+      {/* Popup */}
+      <div className="relative w-full max-w-xl overflow-hidden rounded-3xl bg-white shadow-2xl animate-[popup_.35s_ease]">
+
+        {/* Top Banner */}
+        <div className="bg-gradient-to-r from-[#0f2740] to-[#164a09] p-8 text-white">
+
+          <button
+            onClick={handleClose}
+            className="absolute right-5 top-5 rounded-full bg-white/20 p-2 hover:bg-white/30 transition"
+          >
+            <XMarkIcon className="h-5 w-5" />
+          </button>
+
+          <span className="rounded-full bg-white/20 px-4 py-1 text-sm font-medium">
+            Welcome 👋
+          </span>
+
+          <h2 className="mt-5 text-3xl font-bold">
+            Begin Your Global Healthcare Career
+          </h2>
+
+          {/* <p className="mt-3 text-white/90 leading-7">
+            Join thousands of healthcare professionals preparing for
+            international licensing with expert guidance, exam coaching,
+            documentation support, and career assistance.
+          </p> */}
+
         </div>
 
-        <div>
+        {/* Body */}
+      <div>
           {submitted ? (
             <div className="flex h-full flex-col items-center justify-center rounded-2xl bg-forest-50 p-10 text-center">
               <CheckCircle2 className="h-10 w-10 text-forest-700" />
@@ -84,7 +91,7 @@ export default function CTAContact() {
               </p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-2 p-8">
               <div className="grid gap-5 sm:grid-cols-1">
                 <Input variant="outlined" label="Full name" color="teal" required  containerProps={{className: ""}}/>
                 <Input variant="outlined" label="Phone / WhatsApp" color="teal" required  containerProps={{className: ""}}/>
@@ -114,7 +121,22 @@ export default function CTAContact() {
             </form>
           )}
         </div>
+
       </div>
-    </section>
+
+      <style jsx>{`
+        @keyframes popup {
+          from {
+            opacity: 0;
+            transform: scale(0.9) translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+          }
+        }
+      `}</style>
+
+    </div>
   );
 }

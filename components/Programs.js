@@ -49,12 +49,12 @@ export default function Programs() {
           title="Overseas medical licensure exam training"
           description="We specialise in preparing candidates for internationally recognised licensure exams, ensuring they meet global standards of competency and expertise."
         />
-        <a
+        {/* <a
           href="#fees"
           className="whitespace-nowrap text-sm font-semibold text-navy-700 underline decoration-navy-300 decoration-2 underline-offset-4 hover:text-navy-800"
         >
           View course fees &amp; batches
-        </a>
+        </a> */}
       </div>
 
       <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

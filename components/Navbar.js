@@ -9,7 +9,7 @@ const NAV_LINKS = [
   { label: "Programs", href: "#programs" },
   { label: "Licensure Journey", href: "#journey" },
   { label: "DataFlow", href: "#dataflow" },
-  { label: "Fees", href: "#fees" },
+  { label: "Services", href: "#services" },
   { label: "Why Us", href: "#why-us" },
   { label: "Contact", href: "#contact" },
 ];
@@ -53,7 +53,7 @@ export default function Navbar() {
           </span>
         </a>
 
-        <ul className="hidden items-center gap-8 lg:flex">
+        <ul className="hidden items-center gap-4 lg:flex">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a

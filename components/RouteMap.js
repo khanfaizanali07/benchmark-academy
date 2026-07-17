@@ -1,98 +1,174 @@
-const NODES = [
-  { label: "UK", sub: "PLAB", x: 300, y: 75 },
-  { label: "USA", sub: "USMLE · NCLEX", x: 459.1, y: 140.9 },
-  { label: "Canada", sub: "NCLEX · PCE", x: 525, y: 300 },
-  { label: "UAE", sub: "DHA · HAAD · MOH", x: 459.1, y: 459.1 },
-  { label: "Saudi Arabia", sub: "SCFHS", x: 300, y: 525 },
-  { label: "Qatar", sub: "QCHP", x: 140.9, y: 459.1 },
-  { label: "Oman", sub: "OMSB", x: 75, y: 300 },
-  { label: "Australia", sub: "ADC", x: 140.9, y: 140.9 },
+import { WORLD_VIEWBOX, LAND_PATH } from "./worldMapData";
+
+// Destination pins — positions are real, projected geographic coordinates
+// (Natural Earth projection, generated from public-domain world-atlas data),
+// not evenly spaced placeholders. UAE/Saudi/Qatar/Oman sit close together on
+// a true map, so they're grouped into one "Gulf" pin the way the academy's
+// own course list groups them (Prometric — Saudi, Qatar, Oman, Bahrain, Kuwait).
+const HUB = { x: 581, y: 218 };
+
+const DESTINATIONS = [
+  { key: "uk", label: "UK", sub: "PLAB", x: 410, y: 144, labelPos: "top" },
+  { key: "canada", label: "Canada", sub: "NCLEX · PCE", x: 232, y: 127, labelPos: "top" },
+  { key: "usa", label: "USA", sub: "USMLE · NCLEX", x: 208, y: 176, labelPos: "bottom" },
+  { key: "gulf", label: "Gulf Region", sub: "DHA · HAAD · MOH · SCFHS", x: 520, y: 217, labelPos: "left" },
+  { key: "australia", label: "Australia", sub: "ADC", x: 698, y: 342, labelPos: "bottom" },
 ];
 
-export default function RouteMap({ className = "" }) {
+// Quadratic bezier control point offset perpendicular to the hub->dest line,
+// bulged "upward" so the routes read like flight paths on an airline map.
+function arcPath(x1, y1, x2, y2) {
+  const mx = (x1 + x2) / 2;
+  const my = (y1 + y2) / 2;
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const lift = Math.min(dist * 0.28, 90);
+  return `M ${x1} ${y1} Q ${mx} ${my - lift} ${x2} ${y2}`;
+}
+
+function labelAnchor(pos) {
+  switch (pos) {
+    case "top":
+      return { dx: 0, dy: -14, anchor: "middle", subDy: -1 };
+    case "bottom":
+      return { dx: 0, dy: 24, anchor: "middle", subDy: 15 };
+    case "left":
+      return { dx: -12, dy: 4, anchor: "end", subDy: 15 };
+    default:
+      return { dx: 12, dy: 4, anchor: "start", subDy: 15 };
+  }
+}
+
+export default function WorldMap({ className = "" }) {
   return (
     <svg
-      viewBox="0 0 600 600"
+      viewBox={WORLD_VIEWBOX}
       className={className}
       role="img"
-      aria-label="Map of destination countries Benchmark Global Healthcare Academy trains candidates for: UK, USA, Canada, UAE, Saudi Arabia, Qatar, Oman and Australia"
+      aria-label="Map showing Benchmark Global Healthcare Academy candidates training in India and moving on to licensed roles in the UK, USA, Canada, the Gulf region and Australia"
     >
       <defs>
-        <radialGradient id="orbitGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#a7d8f6" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#a7d8f6" stopOpacity="0" />
+        <radialGradient id="oceanGlow" cx="34%" cy="42%" r="75%">
+          <stop offset="0%" stopColor="#dcecf8" />
+          <stop offset="100%" stopColor="#eaf4fc" />
         </radialGradient>
-        <linearGradient id="centerBadge" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id="hubBadge" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#2e76b0" />
-          <stop offset="100%" stopColor="#1a4471" />
+          <stop offset="100%" stopColor="#153658" />
         </linearGradient>
+        <clipPath id="mapClip">
+          <rect x="0" y="0" width="820" height="480" rx="24" />
+        </clipPath>
       </defs>
 
-      <circle cx="300" cy="300" r="290" fill="url(#orbitGlow)" />
+      <g clipPath="url(#mapClip)">
+        <rect x="0" y="0" width="820" height="480" fill="url(#oceanGlow)" />
 
-      {/* orbit rings */}
-      <circle cx="300" cy="300" r="225" fill="none" stroke="#21558a" strokeOpacity="0.14" strokeWidth="1.5" />
-      <circle cx="300" cy="300" r="150" fill="none" stroke="#21558a" strokeOpacity="0.1" strokeWidth="1.5" />
+        {/* faint graticule for a "globe" texture */}
+        {[80, 160, 240, 320, 400].map((y) => (
+          <line key={`h-${y}`} x1="0" y1={y} x2="820" y2={y} stroke="#21558a" strokeOpacity="0.05" />
+        ))}
+        {[120, 260, 400, 540, 680].map((x) => (
+          <line key={`v-${x}`} x1={x} y1="0" x2={x} y2="480" stroke="#21558a" strokeOpacity="0.05" />
+        ))}
 
-      {/* route lines */}
-      {NODES.map((n) => (
-        <line
-          key={`line-${n.label}`}
-          x1="300"
-          y1="300"
-          x2={n.x}
-          y2={n.y}
-          stroke="#3f7d21"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          className="route-path"
-          opacity="0.55"
-        />
-      ))}
+        <path d={LAND_PATH} fill="#a8db8f" stroke="#5f9f36" strokeWidth="0.6" />
 
-      {/* destination nodes */}
-      {NODES.map((n) => {
-        const labelAbove = n.y < 300;
-        const dx = n.x === 300 ? 0 : n.x < 300 ? -1 : 1;
-        return (
-          <g key={n.label} className="animate-float-slow">
-            <circle cx={n.x} cy={n.y} r="9" fill="#f7fafc" stroke="#164a09" strokeWidth="2.5" />
-            <circle cx={n.x} cy={n.y} r="3" fill="#164a09" />
-            <text
-              x={n.x + dx * 4}
-              y={labelAbove ? n.y - 18 : n.y + 26}
-              textAnchor={dx === 0 ? "middle" : dx > 0 ? "start" : "end"}
-              className="font-sans"
-              fontSize="15"
-              fontWeight="700"
-              fill="#0f1c28"
-            >
-              {n.label}
-            </text>
-            <text
-              x={n.x + dx * 4}
-              y={labelAbove ? n.y - 4 : n.y + 41}
-              textAnchor={dx === 0 ? "middle" : dx > 0 ? "start" : "end"}
-              className="font-mono"
-              fontSize="10.5"
-              fill="#21558a"
-            >
-              {n.sub}
-            </text>
-          </g>
-        );
-      })}
+        {/* flight paths from the India hub to each destination */}
+        {DESTINATIONS.map((d) => (
+          <path
+            key={`arc-${d.key}`}
+            d={arcPath(HUB.x, HUB.y, d.x, d.y)}
+            fill="none"
+            stroke="#164a09"
+            strokeWidth="1.75"
+            strokeLinecap="round"
+            className="route-path"
+            opacity="0.6"
+          />
+        ))}
 
-      {/* center badge */}
-      <circle cx="300" cy="300" r="58" fill="url(#centerBadge)" />
-      <circle cx="300" cy="300" r="58" fill="none" stroke="#f7fafc" strokeWidth="4" />
-      <circle cx="300" cy="300" r="66" fill="none" stroke="#82be4c" strokeWidth="2" strokeDasharray="3 6" />
-      <text x="300" y="294" textAnchor="middle" className="font-display" fontSize="15" fontWeight="700" fill="#f7fafc">
-        YOU
-      </text>
-      <text x="300" y="313" textAnchor="middle" className="font-mono" fontSize="9" fill="#a7d8f6" letterSpacing="1">
-        START HERE
-      </text>
+        {/* destination pins */}
+        {DESTINATIONS.map((d) => {
+          const { dx, dy, anchor, subDy } = labelAnchor(d.labelPos);
+          return (
+            <g key={d.key} className="animate-float-slow">
+              <circle cx={d.x} cy={d.y} r="7.5" fill="#f7fafc" stroke="#164a09" strokeWidth="2.5" />
+              <circle cx={d.x} cy={d.y} r="2.5" fill="#164a09" />
+              <text
+                x={d.x + dx}
+                y={d.y + dy}
+                textAnchor={anchor}
+                className="font-sans"
+                fontSize="18"
+                fontWeight="700"
+                fill="#0f1c28"
+              >
+                {d.label}
+              </text>
+              <text
+                x={d.x + dx}
+                y={d.y + dy + subDy}
+                textAnchor={anchor}
+                className="font-mono"
+                fontSize="14"
+                fill="#21558a"
+              >
+                {d.sub}
+              </text>
+            </g>
+          );
+        })}
+
+        <defs>
+  <clipPath id="hubClip">
+    <circle cx={HUB.x} cy={HUB.y} r="43" />
+  </clipPath>
+</defs>
+
+<image
+  href="/nurse2.jpg"
+  x={HUB.x - 43}
+  y={HUB.y - 43}
+  width={86}
+  height={86}
+  clipPath="url(#hubClip)"
+  preserveAspectRatio="xMidYMid slice"
+/>
+
+<circle
+  cx={HUB.x}
+  cy={HUB.y}
+  r={43}
+  fill="none"
+  stroke="#f7fafc"
+  strokeWidth="4"
+/>
+
+        <text
+          x={HUB.x}
+          y={HUB.y + 68}
+          textAnchor="middle"
+          className="font-display"
+          fontSize="18"
+          fontWeight="700"
+          fill="#0f1c28"
+        >
+          India
+        </text>
+        <text
+          x={HUB.x}
+          y={HUB.y + 84}
+          textAnchor="middle"
+          className="font-mono"
+          fontSize="12"
+          fill="#21558a"
+          letterSpacing="0.5"
+        >
+          YOUR JOURNEY STARTS HERE
+        </text>
+      </g>
     </svg>
   );
 }
