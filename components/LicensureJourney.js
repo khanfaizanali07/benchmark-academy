@@ -60,7 +60,7 @@ export default function LicensureJourney() {
           </ol>
         </div>
 
-        <div className="mt-14 grid gap-4 sm:grid-cols-3">
+        {/* <div className="mt-14 grid gap-4 sm:grid-cols-3">
           <div className="rounded-2xl border border-navy-700 bg-navy-800/60 p-5">
             <p className="font-mono text-2xl font-semibold text-forest-300">25–45 days</p>
             <p className="mt-1 text-sm text-navy-100/70">Typical DataFlow processing time</p>
@@ -73,7 +73,7 @@ export default function LicensureJourney() {
             <p className="font-mono text-2xl font-semibold text-forest-300">1–4 weeks</p>
             <p className="mt-1 text-sm text-navy-100/70">Exam booking window</p>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

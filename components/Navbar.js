@@ -68,11 +68,11 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a
-            href="tel:+919800000000"
+            href="tel:+918830577926"
             className="flex items-center gap-1.5 text-sm font-medium text-navy-700 hover:text-navy-800"
           >
             <PhoneCall className="h-4 w-4" />
-            +91&nbsp;98XXX&nbsp;XXXXX
+            +91&nbsp;88305&nbsp;77926
           </a>
           <a href="#contact">
             <Button className="bg-forest-800 shadow-none normal-case font-sans font-semibold tracking-normal hover:bg-forest-700 hover:shadow-md">

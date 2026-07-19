@@ -9,10 +9,10 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import ImpactStats from "@/components/ImpactStats";
 import CTAContact from "@/components/CTAContact";
 import Footer from "@/components/Footer";
-import { Train } from "lucide-react";
 import TrainingPrograms from "@/components/TrainingPrograms";
 import HealthcareLicensingServices from "@/components/HealthcareLicensingServices";
 import ContactPopup from "@/components/ContactPopup";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function Home() {
   // const [size, setSize] = React.useState(null);
@@ -24,7 +24,7 @@ export default function Home() {
   //   }, 4000);
   // }, []);
   return (
-    <main>
+    <main className="w-full relative">
       <ContactPopup/>
       <Navbar />
       <Hero />
@@ -39,43 +39,16 @@ export default function Home() {
       {/* <ImpactStats /> */}
       <CTAContact />
       <Footer />
-      {/* <Dialog
-        open={
-          size === "xs" ||
-          size === "sm" ||
-          size === "md" ||
-          size === "lg" ||
-          size === "xl" ||
-          size === "xxl"
-        }
-        size={size || "md"}
-        handler={handleOpen}
-      >
-        <DialogHeader>Its a simple modal.</DialogHeader>
-        <DialogBody>
-          The key to more success is to have a lot of pillows. Put it this way,
-          it took me twenty five years to get these plants, twenty five years of
-          blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-          getting started. I&apos;m up to something. Fan luv.
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={() => handleOpen(null)}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button
-            variant="gradient"
-            color="green"
-            onClick={() => handleOpen(null)}
-          >
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog> */}
+      <div className="fixed bottom-4 right-4 z-50">
+        <a
+          href="https://wa.me/918830577926"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-forest-400 text-paper shadow-lg transition-colors hover:bg-forest-500"
+        >
+          <FaWhatsapp className="h-7 w-7" />
+        </a>
+      </div>
     </main>
   );
 }

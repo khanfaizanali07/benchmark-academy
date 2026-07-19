@@ -5,17 +5,17 @@ const COLUMNS = [
   {
     title: "Programs",
     links: [
-      { label: "DHA · HAAD · MOH (UAE)", href: "#programs" },
-      { label: "Prometric (GCC)", href: "#programs" },
-      { label: "NCLEX-RN", href: "#programs" },
-      { label: "PLAB · USMLE · ADC", href: "#programs" },
+      { label: "Programs", href: "#programs" },
+      { label: "Licensure Journey", href: "#journey" },
+      // { label: "Why Us", href: "#why-us" },
+      // { label: "Contact", href: "#contact" },
     ],
   },
   {
     title: "Services",
     links: [
-      { label: "DataFlow verification", href: "#dataflow" },
-      { label: "Exam registration", href: "#dataflow" },
+      { label: "Healthcare Licensing Services", href: "#services" },
+      { label: "Training Programs", href: "#trainingPrograms" },
       // { label: "Finishing School", href: "#fees" },
       // { label: "Course fees", href: "#fees" },
     ],
@@ -58,14 +58,16 @@ export default function Footer() {
               pursuing licensure and careers across the globe.
             </p>
             <div className="mt-6 flex gap-3">
-              {[Facebook, Instagram, Linkedin, Youtube].map((Icon, i) => (
+              {[{icon:Facebook, link: "https://www.facebook.com/people/Benchmark-Global-Healthcare-Academy/61592089469111"}, {icon:Instagram, link: "https://www.instagram.com/benchmarkglobal.academy"}, {icon:Linkedin, link: "https://www.linkedin.com/in/benchmark-global-heathcare-academy-577920422/"}].map((social, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Social link"
                   className="flex h-9 w-9 items-center justify-center rounded-full border border-navy-700 text-navy-200 transition-colors hover:border-forest-500 hover:text-forest-300"
                 >
-                  <Icon className="h-4 w-4" />
+                  <social.icon className="h-4 w-4" />
                 </a>
               ))}
             </div>
