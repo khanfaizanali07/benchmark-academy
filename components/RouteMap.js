@@ -13,7 +13,7 @@ const SIZE = 480;
 const CENTER = SIZE / 2;
 const GLOBE_RADIUS = SIZE / 2 - 54; // leaves room for labels near the horizon
 const TILT = -21; // fixed pitch — a pleasant "looking slightly down" angle
-const DEGREES_PER_SECOND = 5;
+const DEGREES_PER_SECOND = 12;
 
 const LAND_GEOMETRY = { type: "MultiPolygon", coordinates: LAND_RINGS };
 

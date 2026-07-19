@@ -72,7 +72,7 @@ export default function Navbar() {
             className="flex items-center gap-1.5 text-sm font-medium text-navy-700 hover:text-navy-800"
           >
             <PhoneCall className="h-4 w-4" />
-            +91&nbsp;88305&nbsp;77926
+            +91&nbsp;88305&nbsp;77926 
           </a>
           <a href="#contact">
             <Button className="bg-forest-800 shadow-none normal-case font-sans font-semibold tracking-normal hover:bg-forest-700 hover:shadow-md">

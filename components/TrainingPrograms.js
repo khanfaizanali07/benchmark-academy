@@ -1,4 +1,5 @@
 'use client';
+import Image from "next/image";
 import React from "react";
 import {
   FaUserMd,
@@ -13,6 +14,8 @@ const TrainingPrograms = () => {
   {
     title: "Medical Professionals",
     icon: <FaUserMd className="text-4xl text-[#164a09]" />,
+    image: "/doctor.png",
+    alt: "Medical Professionals",
     items: [
       "General Practitioners - Comprehensive licensing preparation",
       "Specialists - Advanced medical licensing support",
@@ -21,6 +24,8 @@ const TrainingPrograms = () => {
   },
   {
     title: "Nursing Professionals",
+    image: "/nurse.png",
+    alt: "Nursing Professionals",
     icon: <FaHeartbeat className="text-4xl text-[#164a09]" />,
     items: [
       "Registered Nurses - DHA, HAAD, MOH preparation",
@@ -30,6 +35,8 @@ const TrainingPrograms = () => {
   },
   {
     title: "Dental Professionals",
+    image: "/dentist.png",
+    alt: "Dental Professionals",
     icon: <FaTooth className="text-4xl text-[#164a09]" />,
     items: [
       "General Dentists - Comprehensive dental licensing preparation",
@@ -38,10 +45,22 @@ const TrainingPrograms = () => {
     ],
   },
   {
+    title: "Pharmacist - All Gulf countries (GCC)",
+    image: "/pharmacist.png",
+    alt: "Pharmacist Professionals",
+    icon: <FaTooth className="text-4xl text-[#164a09]" />,
+    items: [
+      "Pharmacist graduate & Pharm-D international career preparation",
+      "Pharmacist - exams preparation for All Gulf countries (GCC), Australia, UK, USA",
+    ],
+  },
+  {
     title: "Allied Health Professionals",
+    image: "/allied.png",
+    alt: "Allied Health Professionals",
     icon: <FaStethoscope className="text-4xl text-[#164a09]" />,
     items: [
-      "Pharmacists - Licensing exam preparation and career support",
+      "physiotherapist - Licensing exam preparation and career support",
       "Lab Technicians - Medical laboratory licensing guidance",
       "Radiographers - Imaging technology licensing preparation",
       "Operation Theater Technicians - Surgical technology licensing",
@@ -73,39 +92,33 @@ const TrainingPrograms = () => {
         {/* Cards */}
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-4">
           {trainingPrograms.map((program, index) => (
-            <div
-              key={index}
-              className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:-translate-y-2"
-            >
-              {/* Top Bar */}
-              <div className="h-2 bg-gradient-to-r from-[#0f2740] to-[#164a09]" />
+           <div className="p-8">
+  <div className="w-full h-48 rounded-xl overflow-hidden mb-6">
+    <Image
+      src={program.image}
+      alt={program.title}
+      width={500}
+      height={300}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+    />
+  </div>
 
-              <div className="p-8">
-                <div className="w-16 h-16 rounded-xl bg-[#164a09]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition">
-                  {program.icon}
-                </div>
+  <h3 className="text-2xl font-bold text-[#0f2740] mb-6">
+    {program.title}
+  </h3>
 
-                <h3 className="text-2xl font-bold text-[#0f2740] mb-6">
-                  {program.title}
-                </h3>
-
-                <ul className="space-y-4">
-                  {program.items.map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-3 text-gray-600"
-                    >
-                      <FaCheckCircle className="text-[#164a09] mt-1 flex-shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* <button className="mt-8 w-full rounded-lg bg-[#0f2740] hover:bg-[#164a09] text-white font-semibold py-3 transition-all duration-300">
-                  Learn More
-                </button> */}
-              </div>
-            </div>
+  <ul className="space-y-4">
+    {program.items.map((item, i) => (
+      <li
+        key={i}
+        className="flex items-start gap-3 text-gray-600"
+      >
+        <FaCheckCircle className="text-[#164a09] mt-1 flex-shrink-0" />
+        <span>{item}</span>
+      </li>
+    ))}
+  </ul>
+</div>
           ))}
         </div>
 
