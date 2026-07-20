@@ -27,6 +27,7 @@ const PROGRAM_OPTIONS = [
   "NPTE / PCE (Physiotherapy)",
   "DataFlow verification only",
   "Not sure yet",
+  "Other"
 ];
   const handleSubmit = async (e) => {
     e.preventDefault();

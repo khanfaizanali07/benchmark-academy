@@ -45,7 +45,7 @@ const TrainingPrograms = () => {
     ],
   },
   {
-    title: "Pharmacist - All Gulf countries (GCC)",
+    title: "Pharmacist",
     image: "/pharmacist.png",
     alt: "Pharmacist Professionals",
     icon: <FaTooth className="text-4xl text-[#164a09]" />,
