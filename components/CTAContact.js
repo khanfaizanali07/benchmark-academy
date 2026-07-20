@@ -78,7 +78,13 @@ export default function CTAContact() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-ink">Call or WhatsApp</p>
-                <p className="text-sm text-ink/65">+91 98XXX XXXXX</p>
+                <a
+            href="tel:+918830577926"
+            className="flex items-center gap-1.5 text-sm font-medium text-navy-700 hover:text-navy-800"
+          >
+            {/* <PhoneCall className="h-4 w-4" /> */}
+            +91&nbsp;88305&nbsp;77926 
+          </a>
               </div>
             </div>
             <div className="flex items-start gap-3.5">
@@ -87,10 +93,15 @@ export default function CTAContact() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-ink">Email</p>
-                <p className="text-sm text-ink/65">benchmarkglobal.academy@gmail.com</p>
+                <a
+                  href="mailto:benchmarkglobal.academy@gmail.com"
+                  className="text-sm text-navy-700 hover:text-navy-800"
+                >
+                  benchmarkglobal.academy@gmail.com
+                </a>
               </div>
             </div>
-            <div className="flex items-start gap-3.5">
+            {/* <div className="flex items-start gap-3.5">
               <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 text-navy-700">
                 <MapPin className="h-5 w-5" />
               </div>
@@ -100,7 +111,7 @@ export default function CTAContact() {
                   office address here
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
